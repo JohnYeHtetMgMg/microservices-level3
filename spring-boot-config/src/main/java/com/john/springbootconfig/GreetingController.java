@@ -1,11 +1,11 @@
 package com.john.springbootconfig;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class GreetingController {
@@ -19,11 +19,11 @@ public class GreetingController {
     @Value("${my.list.value}")
     private List<String> list;
 
-    @Value("#{${dbvalues}}")
-    private Map<String, String> map;
+    @Autowired
+    private DbSettings dbSettings;
 
     @GetMapping("/greeting")
     public String greeting() {
-        return greetingMessage + staticMsg + list + map;
+        return greetingMessage + staticMsg + list + "<br />" + dbSettings.toString();
     }
 }
